@@ -38,11 +38,15 @@ input_data = np.array([[
     thalach, exang, oldpeak, slope, ca, thal
 ]])
 
-# Prediction button
 if st.button("Predict"):
-    prediction = model.predict(input_data)[0]
+    try:
+        input_selected = selector.transform(input_data)
+        prediction = model.predict(input_selected)[0]
 
-    if prediction == 1:
-        st.error("⚠️ High Risk of Heart Disease")
-    else:
-        st.success("✅ Low Risk of Heart Disease")
+        if prediction == 1:
+            st.error("⚠️ High Risk of Heart Disease")
+        else:
+            st.success("✅ Low Risk of Heart Disease")
+
+    except Exception as e:
+        st.error(f"Prediction error: {e}")
